@@ -1,0 +1,22 @@
+/* Custom Màu xanh dương nhạt */
+:root {
+    --light-blue: #87CEEB; /* Màu Sky Blue cực dịu */
+}
+
+.text-light-blue {
+    color: var(--light-blue);
+}
+
+.border-light-blue {
+    border-color: var(--light-blue);
+}
+
+/* Hiệu ứng mượt mà cho dark mode */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Banner 45 độ tùy chỉnh nếu muốn nghiêng mạnh hơn */
+.banner-rotate {
+    transform: perspective(1000px) rotateY(-15deg) rotateX(5deg);
+}
