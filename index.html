@@ -5,106 +5,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Foxname - The Best Script</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script>
-        tailwind.config = {
-            darkMode: 'class',
-        }
+        tailwind.config = { darkMode: 'class' }
     </script>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300 min-h-screen">
+<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300 min-h-screen overflow-x-hidden">
 
     <nav class="fixed top-0 w-full flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md z-50">
         <div class="flex items-center gap-4">
-            <button id="sidebar-btn" class="text-2xl hover:text-blue-400">
-                <i class="fa-solid fa-bars"></i>
-            </button>
+            <button id="sidebar-btn" class="text-2xl hover:text-blue-400"><i class="fa-solid fa-bars"></i></button>
             <span class="text-2xl font-bold text-light-blue tracking-wider">Foxname</span>
         </div>
         <div class="flex items-center gap-4">
-            <button id="theme-toggle" class="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-blue-100 dark:hover:bg-blue-900 transition-all">
-                <i id="theme-icon" class="fa-solid fa-moon text-blue-500"></i>
-            </button>
-            <div class="flex items-center gap-2">
-                <img src="https://cdn.discordapp.com/attachments/1420233083801571419/1420233084774912040/Frame_14.png?ex=69991622&is=6997c4a2&hm=59e9a7d677f2842e05bda812ebe1a011f8499c9e2e51f06e9e890631bac6f2a8&" alt="Avatar" class="w-10 h-10 rounded-full border-2 border-blue-400 object-cover">
-            </div>
+            <button id="theme-toggle" class="p-2 rounded-full bg-gray-100 dark:bg-gray-800"><i id="theme-icon" class="fa-solid fa-moon text-blue-500"></i></button>
+            <img src="https://cdn.discordapp.com/attachments/1420233083801571419/1420233084774912040/Frame_14.png" class="w-10 h-10 rounded-full border-2 border-blue-400 object-cover">
         </div>
     </nav>
 
-    <main class="pt-32 pb-20 px-10 md:px-20 max-w-[100%] mx-auto">
-        <div class="flex flex-col md:flex-row items-center justify-start gap-12 md:gap-16">
-            
-            <div class="w-full md:w-auto flex justify-start banner-3d-wrap">
-                <img src="https://cdn.discordapp.com/attachments/1418822044019195954/1418827523348762727/TV_-_3.png?ex=69993f1a&is=6997ed9a&hm=34b7d4b5ad3b6240a44d780eb10319def2058138db7bc69e8379dd917af67746&" 
-                     alt="Banner" 
-                     class="banner-3d-image rounded-2xl shadow-2xl border border-blue-300 w-full md:w-[500px] object-cover shadow-blue-500/10">
+    <main class="min-h-screen flex items-center pt-20 px-10 md:px-20">
+        <div class="flex flex-col md:flex-row items-center justify-start gap-12 md:gap-16 w-full">
+            <div class="banner-3d-wrap">
+                <img src="https://cdn.discordapp.com/attachments/1418822044019195954/1418827523348762727/TV_-_3.png" 
+                     class="banner-3d-image rounded-2xl shadow-2xl border border-blue-300 w-full md:w-[500px] object-cover">
             </div>
-
-            <div class="w-full md:flex-1 text-left flex flex-col justify-center">
-                <h1 class="text-4xl md:text-6xl font-black text-light-blue leading-tight uppercase">
-                    THE BEST SCRIPT <br> 99 NIGHT
-                </h1>
-                
-                <p class="text-sm md:text-base font-medium text-gray-500 dark:text-gray-400 mt-4 mb-8 tracking-[0.3em] uppercase opacity-80">
-                    FOXNAME SCRIPT
-                </p>
-
-                <div class="flex gap-4 items-center">
-                    <button class="bg-blue-500 hover:bg-blue-600 text-white px-8 py-4 rounded-xl font-bold transition-all transform hover:scale-105 shadow-lg shadow-blue-500/20">
-                        GET SCRIPT
-                    </button>
-                    
-                    <a href="https://discord.gg/pSp8ABXNT5" target="_blank" class="block">
-                        <button class="border-2 border-blue-400 text-blue-400 px-8 py-4 rounded-xl font-bold hover:bg-blue-400/10 transition-all">
-                            DISCORD
-                        </button>
+            <div class="text-left">
+                <h1 class="text-4xl md:text-6xl font-black text-light-blue leading-tight uppercase">THE BEST SCRIPT <br> 99 NIGHT</h1>
+                <p class="text-sm md:text-base font-medium text-gray-500 mt-4 mb-8 tracking-[0.3em] uppercase opacity-80">FOXNAME SCRIPT</p>
+                <div class="flex gap-4">
+                    <button class="bg-blue-500 hover:bg-blue-600 text-white px-8 py-4 rounded-xl font-bold transition-all transform hover:scale-105 shadow-lg shadow-blue-500/20">GET SCRIPT</button>
+                    <a href="https://discord.gg/pSp8ABXNT5" target="_blank">
+                        <button class="border-2 border-blue-400 text-blue-400 px-8 py-4 rounded-xl font-bold hover:bg-blue-400/10 transition-all">DISCORD</button>
                     </a>
                 </div>
             </div>
         </div>
     </main>
 
-    <section class="py-20 px-10 md:px-20 max-w-7xl mx-auto">
-        <h2 class="text-3xl md:text-4xl font-black text-center text-light-blue uppercase mb-16 tracking-widest">
-            Why Choose Foxname?
-        </h2>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            
-            <div class="feature-card p-8 rounded-2xl bg-gray-50 dark:bg-gray-800/50 backdrop-blur-sm border border-gray-100 dark:border-gray-700">
-                <div class="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center mb-6">
-                    <i class="fa-solid fa-gift text-blue-400 text-2xl"></i>
-                </div>
-                <h3 class="text-xl font-bold mb-4 uppercase text-blue-400">Always Free</h3>
-                <p class="text-gray-500 dark:text-gray-400 leading-relaxed">
-                    We believe everyone should have access to the best script experience without paying a dime. All scripts are 100% free to use forever.
-                </p>
+    <section class="py-32 px-10 md:px-20 max-w-7xl mx-auto overflow-hidden">
+        <h2 id="why-title" class="text-3xl md:text-4xl font-black text-center text-light-blue uppercase mb-20 tracking-widest">Why Choose Foxname?</h2>
+        <div id="feature-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+            <div class="feature-box p-8 rounded-2xl bg-gray-50 dark:bg-gray-800/50 border border-gray-700">
+                <i class="fa-solid fa-gift text-blue-400 text-3xl mb-6"></i>
+                <h3 class="text-xl font-bold mb-4 uppercase text-blue-400">Totally Free</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">We believe everyone should have access to the best script experience without paying a dime.</p>
             </div>
-
-            <div class="feature-card p-8 rounded-2xl bg-gray-50 dark:bg-gray-800/50 backdrop-blur-sm border border-gray-100 dark:border-gray-700">
-                <div class="w-12 h-12 bg-green-500/10 rounded-lg flex items-center justify-center mb-6">
-                    <i class="fa-solid fa-shield text-green-400 text-2xl"></i>
-                </div>
-                <h3 class="text-xl font-bold mb-4 uppercase text-green-400">Undetected</h3>
-                <p class="text-gray-500 dark:text-gray-400 leading-relaxed">
-                    Safety is our top priority. Our developers work 24/7 to ensure all scripts remain hidden from anti-cheat systems. No ban, just fun!
-                </p>
+            <div class="feature-box p-8 rounded-2xl bg-gray-50 dark:bg-gray-800/50 border border-gray-700">
+                <i class="fa-solid fa-shield text-green-400 text-3xl mb-6"></i>
+                <h3 class="text-xl font-bold mb-4 uppercase text-green-400">Undetect</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">Safety is our top priority. Our developers ensure all scripts remain hidden from anti-cheat.</p>
             </div>
-
-            <div class="feature-card p-8 rounded-2xl bg-gray-50 dark:bg-gray-800/50 backdrop-blur-sm border border-gray-100 dark:border-gray-700">
-                <div class="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center mb-6">
-                    <i class="fa-solid fa-headset text-purple-400 text-2xl"></i>
-                </div>
+            <div class="feature-box p-8 rounded-2xl bg-gray-50 dark:bg-gray-800/50 border border-gray-700">
+                <i class="fa-solid fa-headset text-purple-400 text-3xl mb-6"></i>
                 <h3 class="text-xl font-bold mb-4 uppercase text-purple-400">Instant Support</h3>
-                <p class="text-gray-500 dark:text-gray-400 leading-relaxed">
-                    Having issues? Join our growing community on Discord. Our dedicated staff is always ready to help you fix any problems in seconds.
-                </p>
+                <p class="text-gray-400 text-sm leading-relaxed">Join our Discord. Our staff is always ready to help you fix any problems in seconds.</p>
             </div>
-
         </div>
     </section>
 
-    <script src="script.js"></script>
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hiệu ứng bung từ giữa ra 3 bên
+        gsap.from(".feature-box", {
+            scrollTrigger: {
+                trigger: "#feature-grid",
+                start: "top 80%",
+                toggleActions: "play none none reverse"
+            },
+            x: (i) => (i - 1) * 200, // Box 0 qua trái, box 1 đứng yên, box 2 qua phải
+            opacity: 0,
+            scale: 0.5,
+            duration: 1,
+            stagger: 0.2,
+            ease: "expo.out"
+        });
+    </script>
 </body>
 </html>
