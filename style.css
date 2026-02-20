@@ -27,3 +27,15 @@ body {
 .banner-3d-image:hover {
     transform: rotateY(10deg) rotateX(2deg) scale(1.05);
 }
+
+/* Hiệu ứng cho mấy cái ô Feature */
+.feature-card {
+    transition: all 0.3s ease;
+    border: 1px solid rgba(135, 206, 235, 0.1);
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--light-blue);
+    box-shadow: 0 10px 30px -10px rgba(135, 206, 235, 0.3);
+}
