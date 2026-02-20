@@ -2,26 +2,28 @@
     --light-blue: #87CEEB;
 }
 
-.text-light-blue {
-    color: var(--light-blue);
-}
+.text-light-blue { color: var(--light-blue); }
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: hidden; /* Tránh bị vỡ lề khi chữ quá dài */
 }
 
-/* Hiệu ứng 3D xéo sâu từ trái vào phải */
+/* Hiệu ứng 3D Xéo */
 .banner-3d-wrap {
     perspective: 1500px;
+    display: flex;
+    align-items: center; /* Căn giữa banner theo chiều dọc của cụm chữ */
 }
 
 .banner-3d-image {
-    /* rotateY(30deg) làm bên phải lùi sâu vào trong */
-    transform: rotateY(30deg) rotateX(5deg);
+    transform: rotateY(25deg) rotateX(5deg);
     transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
     box-shadow: -20px 20px 50px rgba(0, 0, 0, 0.4);
+    /* Khống chế chiều cao tối đa để không bị quá thô */
+    max-height: 350px; 
 }
 
 .banner-3d-image:hover {
-    transform: rotateY(10deg) rotateX(2deg) scale(1.02);
+    transform: rotateY(10deg) rotateX(2deg) scale(1.05);
 }
