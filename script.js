@@ -14,8 +14,10 @@ themeToggle.addEventListener('click', () => {
     }
 });
 
-// Kiểm tra bộ nhớ trình duyệt để giữ mode cũ khi load trang
+// Load theme từ máy người dùng
 if (localStorage.getItem('theme') === 'light') {
     htmlElement.classList.remove('dark');
     themeIcon.classList.replace('fa-moon', 'fa-sun');
+} else {
+    htmlElement.classList.add('dark'); // Mặc định là dark nếu chưa chọn
 }

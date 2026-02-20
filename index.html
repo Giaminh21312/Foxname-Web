@@ -1,18 +1,25 @@
 <!DOCTYPE html>
-<html lang="vi" class="dark"> <head>
+<html lang="vi" class="dark">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Foxname - The Best Script</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">
+<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300 min-h-screen">
 
     <nav class="fixed top-0 w-full flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md z-50">
         <div class="flex items-center gap-4">
             <button id="sidebar-btn" class="text-2xl hover:text-blue-400">
-                <i class="fa-solid fa-bars"></i> </button>
+                <i class="fa-solid fa-bars"></i>
+            </button>
             <span class="text-2xl font-bold text-light-blue tracking-wider">Foxname</span>
         </div>
 
@@ -30,11 +37,10 @@
     <main class="pt-32 pb-20 px-10 max-w-7xl mx-auto">
         <div class="flex flex-col md:flex-row items-center gap-12">
             
-            <div class="w-full md:w-1/2 flex justify-center">
-                <div class="relative group">
-                    <img src="https://cdn.discordapp.com/attachments/1418822044019195954/1418827523348762727/TV_-_3.png?ex=69993f1a&is=6997ed9a&hm=34b7d4b5ad3b6240a44d780eb10319def2058138db7bc69e8379dd917af67746&" alt="Banner" 
-                         class="rounded-2xl shadow-2xl shadow-blue-500/20 transform rotate-[-5deg] group-hover:rotate-0 transition-transform duration-500 border border-blue-300">
-                </div>
+            <div class="w-full md:w-1/2 flex justify-center banner-3d-wrap">
+                <img src="https://cdn.discordapp.com/attachments/1418822044019195954/1418827523348762727/TV_-_3.png?ex=69993f1a&is=6997ed9a&hm=34b7d4b5ad3b6240a44d780eb10319def2058138db7bc69e8379dd917af67746&" 
+                     alt="Banner" 
+                     class="banner-3d-image rounded-2xl shadow-2xl border border-blue-300 w-full max-w-md object-cover">
             </div>
 
             <div class="w-full md:w-1/2 text-left">

@@ -1,22 +1,27 @@
-/* Custom Màu xanh dương nhạt */
 :root {
-    --light-blue: #87CEEB; /* Màu Sky Blue cực dịu */
+    --light-blue: #87CEEB;
 }
 
 .text-light-blue {
     color: var(--light-blue);
 }
 
-.border-light-blue {
-    border-color: var(--light-blue);
-}
-
-/* Hiệu ứng mượt mà cho dark mode */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Banner 45 độ tùy chỉnh nếu muốn nghiêng mạnh hơn */
-.banner-rotate {
-    transform: perspective(1000px) rotateY(-15deg) rotateX(5deg);
+/* Hiệu ứng 3D xéo sâu từ trái vào phải */
+.banner-3d-wrap {
+    perspective: 1500px;
+}
+
+.banner-3d-image {
+    /* rotateY(30deg) làm bên phải lùi sâu vào trong */
+    transform: rotateY(30deg) rotateX(5deg);
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    box-shadow: -20px 20px 50px rgba(0, 0, 0, 0.4);
+}
+
+.banner-3d-image:hover {
+    transform: rotateY(10deg) rotateX(2deg) scale(1.02);
 }
