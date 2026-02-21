@@ -6,6 +6,7 @@
     <title>Foxname - The Best Script</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     
     <script>
@@ -30,6 +31,10 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
+        /* Hiệu ứng hiện trang web sau loading */
+        #main-content { opacity: 0; transform: scale(0.98); transition: all 1s cubic-bezier(0.22, 1, 0.36, 1); }
+        #main-content.loaded { opacity: 1; transform: scale(1); }
+
         /* Banner 3D */
         .banner-wrap { perspective: 1200px; }
         .banner-3d {
@@ -39,13 +44,14 @@
         }
         .banner-3d:hover { transform: rotateY(-5deg) rotateX(0deg) scale(1.05); }
 
-        /* Hiệu ứng 3 ô tính năng */
-        .feature-box {
+        /* 3 ô tính năng */
+        .feature-box { opacity: 0; transform: translateY(50px); }
+        .feature-box-inner {
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             border: 1px solid transparent;
         }
-        .feature-box:hover {
-            transform: translateY(-15px) scale(1.02);
+        .feature-box-inner:hover {
+            transform: translateY(-15px);
             border-color: #3b82f6;
             box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
         }
@@ -57,114 +63,148 @@
         .page-content.active { display: block; }
     </style>
 </head>
-<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-500 min-h-screen">
+<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-500 min-h-screen overflow-x-hidden">
 
     <div id="loader">
         <div class="loader-circle mb-4"></div>
-        <p class="text-sky-400 font-bold tracking-widest uppercase text-xs">Loading Foxname...</p>
+        <p class="text-sky-400 font-bold tracking-widest uppercase text-xs">Foxname Engine...</p>
     </div>
 
-    <aside id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 z-[60] p-6 flex flex-col shadow-2xl">
-        <div class="flex justify-between items-center mb-10">
-            <span class="text-2xl font-black text-sky-400">FOXNAME</span>
-            <button id="close-sidebar" class="text-xl hover:text-red-500"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-        <nav class="space-y-4 flex-1">
-            <button onclick="showPage('main')" class="w-full flex items-center gap-4 p-4 rounded-xl hover:bg-sky-500/10 font-bold transition-all text-left">
-                <i class="fa-solid fa-house text-sky-500 w-6"></i> Main
-            </button>
-            <button onclick="showPage('get-script')" class="w-full flex items-center gap-4 p-4 rounded-xl hover:bg-sky-500/10 font-bold transition-all text-left">
-                <i class="fa-solid fa-code text-sky-500 w-6"></i> Get Script
-            </button>
-        </nav>
-        <div class="pt-6 border-t border-gray-100 dark:border-gray-700">
-            <a href="https://discord.gg/pSp8ABXNT5" target="_blank" class="flex items-center justify-center gap-3 w-full py-3 rounded-xl bg-[#5865F2] hover:bg-[#4752C4] text-white font-bold transition-all shadow-lg">
-                <i class="fa-brands fa-discord text-xl"></i> Discord
-            </a>
-        </div>
-    </aside>
-
-    <div id="overlay" class="fixed inset-0 bg-black/50 z-[55] hidden backdrop-blur-sm"></div>
-
-    <nav class="fixed top-0 w-full flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md z-50">
-        <div class="flex items-center gap-4">
-            <button id="sidebar-btn" class="text-2xl hover:text-sky-500"><i class="fa-solid fa-bars"></i></button>
-            <span class="text-2xl font-black text-sky-400 tracking-tighter">FOXNAME</span>
-        </div>
-        <div class="flex items-center gap-4">
-            <button id="theme-toggle" class="p-2 rounded-full bg-gray-100 dark:bg-gray-800 transition-all">
-                <i id="theme-icon" class="fa-solid fa-sun text-orange-500 text-xl"></i>
-            </button>
-            <img src="https://cdn.discordapp.com/attachments/1420233083801571419/1420233084774912040/Frame_14.png" 
-                 referrerpolicy="no-referrer"
-                 class="w-10 h-10 rounded-full border-2 border-sky-400 object-cover" 
-                 onerror="this.src='https://ui-avatars.com/api/?name=F&background=0ea5e9&color=fff'">
-        </div>
-    </nav>
-
-    <div id="page-main" class="page-content active">
-        <main class="min-h-screen flex items-center pt-24 px-10 md:px-20">
-            <div class="flex flex-col md:flex-row items-center gap-16 w-full">
-                <div class="banner-wrap">
-                    <img src="https://cdn.discordapp.com/attachments/1418822044019195954/1418827523348762727/TV_-_3.png" 
-                         referrerpolicy="no-referrer"
-                         class="banner-3d rounded-3xl w-full md:w-[520px] object-cover">
-                </div>
-                <div class="text-left">
-                    <h1 class="text-5xl md:text-7xl font-black text-sky-400 leading-none uppercase tracking-tighter">THE BEST SCRIPT <br> 99 NIGHT</h1>
-                    <p class="text-sm font-bold text-gray-400 mt-6 mb-10 tracking-[0.5em] uppercase opacity-60">FOXNAME ECOSYSTEM</p>
-                    <button onclick="showPage('get-script')" class="bg-sky-500 hover:bg-sky-600 text-white px-12 py-4 rounded-2xl font-black transition-all shadow-xl shadow-sky-500/20 uppercase">GET SCRIPT NOW</button>
-                </div>
+    <div id="main-content">
+        <aside id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 z-[60] p-6 flex flex-col shadow-2xl">
+            <div class="flex justify-between items-center mb-10">
+                <span class="text-2xl font-black text-sky-400 italic">FOXNAME</span>
+                <button id="close-sidebar" class="text-xl hover:text-red-500"><i class="fa-solid fa-xmark"></i></button>
             </div>
-        </main>
-
-        <section class="py-32 px-10 md:px-20 max-w-7xl mx-auto">
-            <h2 class="text-4xl font-black text-center text-sky-400 uppercase mb-20 tracking-widest italic">Why Choose Foxname?</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="feature-box p-10 rounded-[2.5rem] bg-gray-50 dark:bg-gray-800 shadow-sm border border-gray-100 dark:border-gray-700 transition-all">
-                    <i class="fa-solid fa-gift text-sky-500 text-3xl mb-6"></i>
-                    <h3 class="text-2xl font-black mb-4 uppercase text-sky-500 italic">Always Free</h3>
-                    <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Enjoy high-quality gaming scripts at zero cost forever. Our project ensures that every premium feature remains accessible to everyone without hidden fees, subscriptions, or annoying paywalls in your experience.</p>
-                </div>
-                <div class="feature-box p-10 rounded-[2.5rem] bg-gray-50 dark:bg-gray-800 shadow-sm border border-gray-100 dark:border-gray-700 transition-all">
-                    <i class="fa-solid fa-shield text-green-500 text-3xl mb-6"></i>
-                    <h3 class="text-2xl font-black mb-4 uppercase text-green-500 italic">Undetected</h3>
-                    <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Stay secure with our advanced anti-cheat bypass technology. We provide constant updates to match the latest game versions, ensuring your account remains safe while you dominate the competition with total confidence.</p>
-                </div>
-                <div class="feature-box p-10 rounded-[2.5rem] bg-gray-50 dark:bg-gray-800 shadow-sm border border-gray-100 dark:border-gray-700 transition-all">
-                    <i class="fa-solid fa-headset text-purple-500 text-3xl mb-6"></i>
-                    <h3 class="text-2xl font-black mb-4 uppercase text-purple-500 italic">Support</h3>
-                    <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Get instant help from our professional staff through Discord. We offer 24/7 assistance for setup, troubleshooting, and custom requests to make sure your script runs perfectly on any device without issues.</p>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <div id="page-get-script" class="page-content pt-40 px-6 md:px-20 min-h-screen">
-        <div class="max-w-3xl mx-auto text-center">
-            <h2 class="text-4xl font-black text-sky-400 uppercase mb-12 italic">Copy Script</h2>
-            <div class="flex items-stretch bg-gray-100 dark:bg-gray-800 rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 shadow-inner">
-                <div class="flex-1 p-6 text-left overflow-x-auto">
-                    <code id="script-text" class="text-sky-600 dark:text-sky-400 font-mono italic">nothing</code>
-                </div>
-                <button onclick="copyScript()" class="bg-sky-500 hover:bg-sky-600 text-white px-8 transition-colors">
-                    <i id="copy-icon" class="fa-solid fa-copy"></i>
+            <nav class="space-y-4 flex-1">
+                <button onclick="showPage('main')" class="w-full flex items-center gap-4 p-4 rounded-xl hover:bg-sky-500/10 font-bold transition-all text-left group">
+                    <i class="fa-solid fa-house text-sky-500 w-6 group-hover:scale-110"></i> Main
                 </button>
+                <button onclick="showPage('get-script')" class="w-full flex items-center gap-4 p-4 rounded-xl hover:bg-sky-500/10 font-bold transition-all text-left group">
+                    <i class="fa-solid fa-code text-sky-500 w-6 group-hover:scale-110"></i> Get Script
+                </button>
+            </nav>
+            
+            <div class="pt-6 border-t border-gray-100 dark:border-gray-700 flex justify-center">
+                <a href="https://discord.gg/pSp8ABXNT5" target="_blank" class="flex items-center justify-center w-14 h-14 rounded-2xl bg-[#5865F2] hover:bg-[#4752C4] text-white transition-all shadow-lg hover:-translate-y-1 active:scale-95">
+                    <i class="fa-brands fa-discord text-2xl"></i>
+                </a>
             </div>
-            <p id="copy-status" class="mt-4 text-sky-500 font-bold opacity-0 transition-opacity">✓ Copied to clipboard!</p>
+        </aside>
+
+        <div id="overlay" class="fixed inset-0 bg-black/50 z-[55] hidden backdrop-blur-sm"></div>
+
+        <nav class="fixed top-0 w-full flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md z-50">
+            <div class="flex items-center gap-4">
+                <button id="sidebar-btn" class="text-2xl hover:text-sky-500"><i class="fa-solid fa-bars"></i></button>
+                <span class="text-2xl font-black text-sky-400 tracking-tighter">FOXNAME</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <button id="theme-toggle" class="p-2 rounded-full bg-gray-100 dark:bg-gray-800 transition-all">
+                    <i id="theme-icon" class="fa-solid fa-sun text-orange-500 text-xl"></i>
+                </button>
+                <img src="https://cdn.discordapp.com/attachments/1420233083801571419/1420233084774912040/Frame_14.png" 
+                     referrerpolicy="no-referrer"
+                     class="w-10 h-10 rounded-full border-2 border-sky-400 object-cover" 
+                     onerror="this.src='https://ui-avatars.com/api/?name=F&background=0ea5e9&color=fff'">
+            </div>
+        </nav>
+
+        <div id="page-main" class="page-content active">
+            <main class="min-h-screen flex items-center pt-24 px-10 md:px-20">
+                <div class="flex flex-col md:flex-row items-center gap-16 w-full">
+                    <div class="banner-wrap">
+                        <img src="https://cdn.discordapp.com/attachments/1418822044019195954/1418827523348762727/TV_-_3.png" 
+                             referrerpolicy="no-referrer"
+                             class="banner-3d rounded-3xl w-full md:w-[520px] object-cover">
+                    </div>
+                    <div class="text-left">
+                        <h1 class="text-5xl md:text-7xl font-black text-sky-400 leading-none uppercase tracking-tighter">THE BEST SCRIPT <br> 99 NIGHT</h1>
+                        <p class="text-sm font-bold text-gray-400 mt-6 mb-10 tracking-[0.5em] uppercase opacity-60">FOXNAME ECOSYSTEM</p>
+                        <button onclick="showPage('get-script')" class="bg-sky-500 hover:bg-sky-600 text-white px-12 py-4 rounded-2xl font-black transition-all shadow-xl shadow-sky-500/20 uppercase">GET SCRIPT NOW</button>
+                    </div>
+                </div>
+            </main>
+
+            <section class="py-32 px-10 md:px-20 max-w-7xl mx-auto">
+                <h2 class="text-4xl font-black text-center text-sky-400 uppercase mb-20 tracking-widest italic">Why Choose Foxname?</h2>
+                
+                <div id="feature-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="feature-box">
+                        <div class="feature-box-inner p-10 rounded-[2.5rem] bg-gray-50 dark:bg-gray-800 shadow-sm border border-gray-100 dark:border-gray-700 h-full">
+                            <i class="fa-solid fa-gift text-sky-500 text-3xl mb-6"></i>
+                            <h3 class="text-2xl font-black mb-4 uppercase text-sky-500 italic">Always Free</h3>
+                            <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Enjoy high-quality gaming scripts at zero cost forever. Our project ensures that every premium feature remains accessible to everyone without hidden fees, subscriptions, or annoying paywalls in your experience.</p>
+                        </div>
+                    </div>
+                    <div class="feature-box">
+                        <div class="feature-box-inner p-10 rounded-[2.5rem] bg-gray-50 dark:bg-gray-800 shadow-sm border border-gray-100 dark:border-gray-700 h-full">
+                            <i class="fa-solid fa-shield text-green-500 text-3xl mb-6"></i>
+                            <h3 class="text-2xl font-black mb-4 uppercase text-green-500 italic">Undetected</h3>
+                            <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Stay secure with our advanced anti-cheat bypass technology. We provide constant updates to match the latest game versions, ensuring your account remains safe while you dominate the competition with total confidence.</p>
+                        </div>
+                    </div>
+                    <div class="feature-box">
+                        <div class="feature-box-inner p-10 rounded-[2.5rem] bg-gray-50 dark:bg-gray-800 shadow-sm border border-gray-100 dark:border-gray-700 h-full">
+                            <i class="fa-solid fa-headset text-purple-500 text-3xl mb-6"></i>
+                            <h3 class="text-2xl font-black mb-4 uppercase text-purple-500 italic">Support</h3>
+                            <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Get instant help from our professional staff through Discord. We offer 24/7 assistance for setup, troubleshooting, and custom requests to make sure your script runs perfectly on any device without issues.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div id="page-get-script" class="page-content pt-40 px-6 md:px-20 min-h-screen">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-4xl font-black text-sky-400 uppercase mb-12 italic">Copy Script</h2>
+                <div class="flex items-stretch bg-gray-100 dark:bg-gray-800 rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700">
+                    <div class="flex-1 p-6 text-left overflow-x-auto">
+                        <code id="script-text" class="text-sky-600 dark:text-sky-400 font-mono italic">nothing</code>
+                    </div>
+                    <button onclick="copyScript()" class="bg-sky-500 hover:bg-sky-600 text-white px-8 transition-colors">
+                        <i id="copy-icon" class="fa-solid fa-copy"></i>
+                    </button>
+                </div>
+                <p id="copy-status" class="mt-4 text-sky-500 font-bold opacity-0 transition-opacity">✓ Copied to clipboard!</p>
+            </div>
         </div>
     </div>
 
     <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // 1. Hiệu ứng sau Loading
         window.addEventListener('load', () => {
             setTimeout(() => {
                 const loader = document.getElementById('loader');
                 loader.style.opacity = "0";
-                setTimeout(() => loader.style.display = "none", 500);
-            }, 800);
+                setTimeout(() => {
+                    loader.style.display = "none";
+                    document.getElementById('main-content').classList.add('loaded');
+                    
+                    // Kích hoạt GSAP Scroll
+                    initScrollEffects();
+                }, 600);
+            }, 1000);
         });
 
+        // 2. Hiệu ứng Scroll cho 3 ô
+        function initScrollEffects() {
+            gsap.to(".feature-box", {
+                scrollTrigger: {
+                    trigger: "#feature-grid",
+                    start: "top 85%",
+                },
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                stagger: 0.2,
+                ease: "power4.out"
+            });
+        }
+
+        // Sidebar & Theme
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('overlay');
         const themeIcon = document.getElementById('theme-icon');
@@ -178,6 +218,8 @@
             document.getElementById('page-' + id).classList.add('active');
             sidebar.classList.remove('open'); overlay.classList.add('hidden');
             window.scrollTo(0,0);
+            // Refresh ScrollTrigger khi đổi page
+            ScrollTrigger.refresh();
         }
 
         function updateIcon() {
