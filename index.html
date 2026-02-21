@@ -94,27 +94,27 @@
             <h2 class="text-4xl font-black text-center text-light-blue uppercase mb-20 tracking-widest">Why Choose Foxname?</h2>
             <div id="feature-grid" class="grid grid-cols-1 md:grid-cols-3 gap-10">
                 
-                <div class="feature-box p-10 rounded-[2.5rem] bg-gray-50/50 dark:bg-gray-800/30 backdrop-blur-xl border border-gray-700/50 hover:border-blue-500/30 transition-all duration-500">
+                <div class="feature-box p-10 rounded-[2.5rem] bg-gray-50/50 dark:bg-gray-800/30 backdrop-blur-xl border border-gray-700/50 hover:border-blue-500/40 transition-all duration-500">
                     <i class="fa-solid fa-gift text-blue-400 text-3xl mb-6"></i>
-                    <h3 class="text-2xl font-bold mb-4 uppercase text-blue-400 italic">Lifetime Free</h3>
+                    <h3 class="text-2xl font-bold mb-4 uppercase text-blue-400">Always Free</h3>
                     <p class="text-gray-400 text-sm leading-relaxed">
-                        We are committed to providing high-quality scripts with zero cost forever. Every premium feature is fully unlocked for the community. No hidden subscriptions, no paywalls—just pure, unrestricted access to the best gaming tools available on the market.
+                        Enjoy high-quality gaming scripts at zero cost forever. Our community-driven project ensures that every premium feature remains accessible to everyone without hidden fees, subscriptions, or annoying paywalls in your experience.
                     </p>
                 </div>
 
-                <div class="feature-box p-10 rounded-[2.5rem] bg-gray-50/50 dark:bg-gray-800/30 backdrop-blur-xl border border-gray-700/50 hover:border-green-500/30 transition-all duration-500">
+                <div class="feature-box p-10 rounded-[2.5rem] bg-gray-50/50 dark:bg-gray-800/30 backdrop-blur-xl border border-gray-700/50 hover:border-green-500/40 transition-all duration-500">
                     <i class="fa-solid fa-shield text-green-400 text-3xl mb-6"></i>
-                    <h3 class="text-2xl font-bold mb-4 uppercase text-green-400 italic">Advanced Bypass</h3>
+                    <h3 class="text-2xl font-bold mb-4 uppercase text-green-400">Undetected</h3>
                     <p class="text-gray-400 text-sm leading-relaxed">
-                        Security is our core mission. Our scripts feature an advanced Anti-Cheat Bypass system that is constantly updated to counteract the latest game patches. We ensure maximum account safety and minimize detection risks, allowing you to dominate with peace of mind.
+                        Stay secure with our advanced anti-cheat bypass technology. We provide constant updates to match the latest game versions, ensuring your account remains safe while you dominate the competition with total confidence.
                     </p>
                 </div>
 
-                <div class="feature-box p-10 rounded-[2.5rem] bg-gray-50/50 dark:bg-gray-800/30 backdrop-blur-xl border border-gray-700/50 hover:border-purple-500/30 transition-all duration-500">
-                    <i class="fa-solid fa-bolt text-purple-400 text-3xl mb-6"></i>
-                    <h3 class="text-2xl font-bold mb-4 uppercase text-purple-400 italic">Elite Optimization</h3>
+                <div class="feature-box p-10 rounded-[2.5rem] bg-gray-50/50 dark:bg-gray-800/30 backdrop-blur-xl border border-gray-700/50 hover:border-purple-500/40 transition-all duration-500">
+                    <i class="fa-solid fa-headset text-purple-400 text-3xl mb-6"></i>
+                    <h3 class="text-2xl font-bold mb-4 uppercase text-purple-400">Support</h3>
                     <p class="text-gray-400 text-sm leading-relaxed">
-                        Experience ultra-smooth performance with highly optimized code that prevents FPS drops and lag. Our dedicated 24/7 support team on Discord is always ready to assist with execution errors or setup guides, ensuring you have a seamless and superior gaming experience.
+                        Get instant help from our professional staff through Discord. We offer 24/7 assistance for setup, troubleshooting, and custom requests to make sure your script runs perfectly on any device without any issues.
                     </p>
                 </div>
 
@@ -184,7 +184,6 @@
             document.getElementById('theme-icon').classList.replace(isDark ? 'fa-sun' : 'fa-moon', isDark ? 'fa-moon' : 'fa-sun');
         });
 
-        // Animation cuộn chuột
         gsap.to(".feature-box", {
             scrollTrigger: { trigger: "#feature-grid", start: "top 85%" },
             opacity: 1, y: 0, filter: "blur(0px)", duration: 1.2, stagger: 0.25, ease: "power4.out"
