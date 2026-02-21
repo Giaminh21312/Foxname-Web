@@ -3,220 +3,352 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Foxname - The Best Script 99 Night</title>
-    
+    <title>Foxname - Premium Script Provider</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <script>
-        // Fix lỗi cuộn trang khi reload
-        window.onbeforeunload = function () { window.scrollTo(0, 0); };
+        // Thiết lập ban đầu
+        window.onbeforeunload = function () { 
+            window.scrollTo(0, 0); 
+        };
         history.scrollRestoration = "manual";
 
-        tailwind.config = { 
+        // Cấu hình Tailwind
+        tailwind.config = {
             darkMode: 'class',
-            theme: { 
-                extend: { 
-                    colors: { 
+            theme: {
+                extend: {
+                    colors: {
                         darkBg: '#0f172a',
-                        cardBg: '#111827'
-                    } 
-                } 
+                        cardBg: '#111827',
+                        skyMain: '#38bdf8',
+                        discord: '#5865F2'
+                    }
+                }
             }
         }
     </script>
 
     <style>
-        body { font-family: 'Inter', sans-serif; overflow-x: hidden; background-color: #0f172a; }
-        
-        /* 1. Loader Animation */
+        /* CSS CUSTOM SECTION */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+            color: #ffffff;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Loading Screen Style */
         #loader {
-            position: fixed; inset: 0; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; background: #0f172a; z-index: 1000;
+            position: fixed;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #0f172a;
+            z-index: 1000;
+            transition: opacity 0.6s ease;
         }
+
         .loader-circle {
-            width: 48px; height: 48px; border: 4px solid rgba(56, 189, 248, 0.1);
-            border-top-color: #38bdf8; border-radius: 50%; animation: spin 1s linear infinite;
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(56, 189, 248, 0.1);
+            border-top-color: #38bdf8;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
         }
-        @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* 2. Page Reveal Animation */
-        #main-content { 
-            opacity: 0; 
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Reveal Animation Wrapper */
+        #main-content {
+            opacity: 0;
             transform: scale(0.98) translateY(10px);
-            transition: opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1), 
-                        transform 1.2s cubic-bezier(0.22, 1, 0.36, 1); 
+            transition: opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+                        transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
         }
-        #main-content.loaded { opacity: 1; transform: scale(1) translateY(0); }
 
-        /* 3. Banner 3D Effect */
-        .banner-wrap { perspective: 1200px; }
+        #main-content.loaded {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        /* Banner 3D Effect */
+        .banner-wrap {
+            perspective: 1500px;
+        }
+
         .banner-3d {
             transform: rotateY(18deg) rotateX(4deg);
-            box-shadow: 25px 25px 50px rgba(0,0,0,0.5);
-            transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+            box-shadow: 25px 25px 60px rgba(0, 0, 0, 0.6);
+            transition: all 0.7s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
-        .banner-3d:hover { transform: rotateY(0deg) rotateX(0deg) scale(1.03); }
 
-        /* 4. Feature Cards & Animation */
-        .feature-box { opacity: 0; transform: translateY(50px); }
+        .banner-3d:hover {
+            transform: rotateY(0deg) rotateX(0deg) scale(1.04);
+            box-shadow: 0px 15px 40px rgba(56, 189, 248, 0.2);
+        }
+
+        /* Sidebar Slide Logic */
+        #sidebar {
+            transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+            transform: translateX(-100%);
+        }
+
+        #sidebar.open {
+            transform: translateX(0);
+        }
+
+        /* Content Display Logic */
+        .page-content {
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .page-content.active {
+            display: block;
+        }
+
+        /* Feature Cards */
+        .feature-box {
+            opacity: 0;
+            transform: translateY(60px);
+        }
+
         .feature-card {
             background: #111827;
             border: 1px solid #1f2937;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .feature-card:hover { 
-            border-color: #38bdf8; 
+
+        .feature-card:hover {
+            border-color: #38bdf8;
             transform: translateY(-12px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            background: #161e2d;
         }
 
-        /* Icon Square inside cards */
         .icon-square {
-            width: 56px; height: 56px;
-            display: flex; align-items: center; justify-content: center;
-            border-radius: 16px; margin-bottom: 24px;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 18px;
+            margin-bottom: 24px;
             transition: transform 0.5s ease;
         }
-        .feature-card:hover .icon-square { transform: rotate(15deg) scale(1.1); }
 
-        /* 5. Sidebar Logic */
-        #sidebar { transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1); transform: translateX(-100%); }
-        #sidebar.open { transform: translateX(0); }
-        .page-content { display: none; }
-        .page-content.active { display: block; }
+        .feature-card:hover .icon-square {
+            transform: rotate(15deg) scale(1.1);
+        }
 
-        /* Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0f172a; }
-        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #38bdf8; }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #38bdf8;
+        }
     </style>
 </head>
-<body class="text-white">
+<body>
 
     <div id="loader">
-        <div class="loader-circle mb-5"></div>
-        <p class="text-sky-400 font-black tracking-[0.3em] uppercase text-[11px] animate-pulse">Foxname System Booting...</p>
+        <div class="loader-circle mb-6"></div>
+        <p class="text-sky-400 font-black tracking-[0.4em] uppercase text-[11px] animate-pulse">
+            Foxname Initializing...
+        </p>
     </div>
 
     <div id="main-content">
-        <aside id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-[#0b1120] border-r border-gray-800 z-[100] p-8 flex flex-col shadow-2xl">
-            <div class="flex justify-between items-center mb-12">
-                <span class="text-2xl font-black text-sky-400 italic">FOXNAME</span>
-                <button id="close-sidebar" class="text-xl hover:text-red-500 transition-colors"><i class="fa-solid fa-xmark"></i></button>
+        
+        <aside id="sidebar" class="fixed top-0 left-0 h-full w-72 bg-[#0b1120] border-r border-gray-800 z-[100] p-10 flex flex-col shadow-2xl">
+            <div class="flex justify-between items-center mb-16">
+                <span class="text-3xl font-black text-sky-400 italic tracking-tighter">FOXNAME</span>
+                <button id="close-sidebar" class="text-2xl hover:text-red-500 transition-all active:scale-90">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
             </div>
             
-            <nav class="space-y-4 flex-1">
-                <button onclick="showPage('main')" class="w-full flex items-center gap-4 p-4 rounded-xl hover:bg-sky-500/10 font-bold transition-all text-left group">
-                    <i class="fa-solid fa-house text-sky-500 w-6 group-hover:scale-110 transition-transform"></i> Main
+            <nav class="space-y-6 flex-1">
+                <button onclick="showPage('main')" class="w-full flex items-center gap-5 p-4 rounded-2xl hover:bg-sky-500/10 font-bold transition-all text-left group">
+                    <i class="fa-solid fa-house text-sky-500 text-xl group-hover:scale-110"></i> 
+                    <span>Main Dashboard</span>
                 </button>
-                <button onclick="showPage('get-script')" class="w-full flex items-center gap-4 p-4 rounded-xl hover:bg-sky-500/10 font-bold transition-all text-left group">
-                    <i class="fa-solid fa-code text-sky-500 w-6 group-hover:scale-110 transition-transform"></i> Get Script
+                <button onclick="showPage('get-script')" class="w-full flex items-center gap-5 p-4 rounded-2xl hover:bg-sky-500/10 font-bold transition-all text-left group">
+                    <i class="fa-solid fa-code text-sky-500 text-xl group-hover:scale-110"></i> 
+                    <span>Get Premium Script</span>
                 </button>
             </nav>
             
-            <div class="pt-8 border-t border-gray-800 flex justify-center">
+            <div class="mt-10 pt-10 border-t border-gray-800">
                 <a href="https://discord.gg/pSp8ABXNT5" target="_blank" 
-                   class="flex items-center justify-center w-14 h-14 rounded-2xl bg-[#5865F2] hover:bg-[#4752C4] text-white transition-all shadow-lg active:scale-90 hover:-translate-y-1">
-                    <i class="fa-brands fa-discord text-2xl"></i>
+                   class="w-full flex items-center justify-center gap-4 py-5 rounded-2xl bg-[#5865F2] hover:bg-[#4752C4] text-white font-black transition-all shadow-xl active:scale-95 uppercase tracking-wider text-sm">
+                    <i class="fa-brands fa-discord text-2xl"></i> Join Discord
                 </a>
             </div>
         </aside>
 
-        <div id="overlay" class="fixed inset-0 bg-black/70 z-[90] hidden backdrop-blur-sm"></div>
+        <div id="overlay" class="fixed inset-0 bg-black/70 z-[90] hidden backdrop-blur-md"></div>
 
-        <nav class="fixed top-0 w-full flex items-center justify-between px-8 py-5 border-b border-gray-800 bg-darkBg/90 backdrop-blur-md z-[80]">
-            <div class="flex items-center gap-5">
-                <button id="sidebar-btn" class="text-2xl hover:text-sky-400 transition-all active:scale-90"><i class="fa-solid fa-bars-staggered"></i></button>
-                <span class="text-2xl font-black text-sky-400 italic tracking-tighter">FOXNAME</span>
+        <nav class="fixed top-0 w-full flex items-center justify-between px-10 py-6 border-b border-gray-800 bg-darkBg/90 backdrop-blur-lg z-[80]">
+            <div class="flex items-center gap-6">
+                <button id="sidebar-btn" class="text-3xl hover:text-sky-400 transition-all active:scale-90">
+                    <i class="fa-solid fa-bars-staggered"></i>
+                </button>
+                <span class="text-3xl font-black text-sky-400 italic tracking-tighter">FOXNAME</span>
             </div>
-            <img src="https://raw.githubusercontent.com/maivuhiep178-cyber/foxname-web/refs/heads/main/icon.png" 
-                 class="w-10 h-10 rounded-full border-2 border-sky-400 object-cover shadow-lg" alt="Avatar">
+            
+            <div class="relative group">
+                <img src="https://raw.githubusercontent.com/maivuhiep178-cyber/foxname-web/refs/heads/main/icon.png" 
+                     class="w-12 h-12 rounded-full border-2 border-sky-400 shadow-lg object-cover cursor-pointer hover:scale-110 transition-all" alt="User Avatar">
+            </div>
         </nav>
 
         <div id="page-main" class="page-content active">
-            <main class="min-h-screen flex items-center pt-24 px-8 md:px-24">
-                <div class="flex flex-col md:flex-row items-center gap-16 w-full">
+            <main class="min-h-screen flex items-center pt-28 px-10 md:px-24">
+                <div class="flex flex-col md:flex-row items-center gap-20 w-full">
+                    
                     <div class="banner-wrap order-2 md:order-1 flex-1">
                         <img src="https://raw.githubusercontent.com/maivuhiep178-cyber/foxname-web/refs/heads/main/banner.png" 
-                             class="banner-3d rounded-[2.5rem] w-full max-w-[500px] object-cover">
+                             class="banner-3d rounded-[3rem] w-full max-w-[520px] object-cover shadow-2xl" alt="Foxname Banner">
                     </div>
+                    
                     <div class="text-left order-1 md:order-2 flex-1">
-                        <h1 class="text-5xl md:text-7xl font-black text-sky-400 leading-[1.1] uppercase tracking-tighter italic">
+                        <h1 class="text-6xl md:text-8xl font-black text-sky-400 leading-[1.05] uppercase tracking-tighter italic">
                             THE BEST SCRIPT <br> 
                             <span class="text-white">99 NIGHT</span>
                         </h1>
-                        <p class="text-base font-bold text-gray-500 mt-6 mb-10 tracking-[0.4em] uppercase opacity-60">Foxname script elite</p>
+                        <p class="text-lg font-bold text-gray-500 mt-8 mb-12 tracking-[0.5em] uppercase opacity-60">
+                            The Ultimate Script Experience
+                        </p>
                         <button onclick="showPage('get-script')" 
-                                class="bg-sky-500 hover:bg-sky-400 text-white px-10 py-4 rounded-2xl font-black transition-all shadow-xl shadow-sky-500/30 uppercase hover:scale-105 active:scale-95">
+                                class="bg-sky-500 hover:bg-sky-400 text-white px-12 py-5 rounded-[1.5rem] font-black transition-all shadow-2xl shadow-sky-500/30 uppercase tracking-widest text-lg hover:scale-105 active:scale-95">
                             GET SCRIPT NOW
                         </button>
                     </div>
+                    
                 </div>
             </main>
 
-            <section class="py-32 px-8 md:px-24">
-                <h2 class="text-4xl font-black text-center text-sky-400 uppercase mb-24 tracking-widest italic">Why Choose Foxname?</h2>
-                <div id="feature-grid" class="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-7xl mx-auto">
+            <section class="py-40 px-10 md:px-24">
+                <h2 class="text-5xl font-black text-center text-sky-400 uppercase mb-28 tracking-[0.2em] italic">
+                    Why Choose Foxname?
+                </h2>
+                
+                <div id="feature-grid" class="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-7xl mx-auto">
+                    
                     <div class="feature-box">
-                        <div class="feature-card p-10 rounded-[2.5rem] h-full">
-                            <div class="icon-square bg-sky-500/10 border border-sky-500/20"><i class="fa-solid fa-gift text-sky-500 text-2xl"></i></div>
-                            <h3 class="text-2xl font-black mb-4 uppercase text-sky-400 italic">Always Free</h3>
-                            <p class="text-gray-400 leading-relaxed font-medium">Top-tier gaming scripts for everyone at zero cost. No subscriptions, no hidden fees.</p>
+                        <div class="feature-card p-12 rounded-[3rem] h-full flex flex-col items-start">
+                            <div class="icon-square bg-sky-500/10 border border-sky-500/20">
+                                <i class="fa-solid fa-gift text-sky-500 text-3xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-black mb-5 uppercase text-sky-400 italic">Always Free</h3>
+                            <p class="text-gray-400 text-lg leading-relaxed">
+                                High-quality gaming scripts at zero cost. We believe in sharing the best experience with everyone.
+                            </p>
                         </div>
                     </div>
+                    
                     <div class="feature-box">
-                        <div class="feature-card p-10 rounded-[2.5rem] h-full">
-                            <div class="icon-square bg-green-500/10 border border-green-500/20"><i class="fa-solid fa-shield-halved text-green-500 text-2xl"></i></div>
-                            <h3 class="text-2xl font-black mb-4 uppercase text-green-500 italic">Undetected</h3>
-                            <p class="text-gray-400 leading-relaxed font-medium">Safety is our priority. Advanced bypass technology ensures you stay safe from bans.</p>
+                        <div class="feature-card p-12 rounded-[3rem] h-full flex flex-col items-start">
+                            <div class="icon-square bg-green-500/10 border border-green-500/20">
+                                <i class="fa-solid fa-shield text-green-500 text-3xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-black mb-5 uppercase text-green-500 italic">Undetected</h3>
+                            <p class="text-gray-400 text-lg leading-relaxed">
+                                Our bypass technology is updated daily. Stay safe and secure while dominating the game.
+                            </p>
                         </div>
                     </div>
+                    
                     <div class="feature-box">
-                        <div class="feature-card p-10 rounded-[2.5rem] h-full">
-                            <div class="icon-square bg-purple-500/10 border border-purple-500/20"><i class="fa-solid fa-headset text-purple-500 text-2xl"></i></div>
-                            <h3 class="text-2xl font-black mb-4 uppercase text-purple-500 italic">Support</h3>
-                            <p class="text-gray-400 leading-relaxed font-medium">Our professional staff is available 24/7 on Discord to help with any script issues.</p>
+                        <div class="feature-card p-12 rounded-[3rem] h-full flex flex-col items-start">
+                            <div class="icon-square bg-purple-500/10 border border-purple-500/20">
+                                <i class="fa-solid fa-headset text-purple-500 text-3xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-black mb-5 uppercase text-purple-500 italic">Support</h3>
+                            <p class="text-gray-400 text-lg leading-relaxed">
+                                Any issues? Our professional staff is available 24/7 on Discord to support your technical needs.
+                            </p>
                         </div>
                     </div>
+                    
                 </div>
             </section>
         </div>
 
-        <div id="page-get-script" class="page-content pt-44 px-8 min-h-screen">
+        <div id="page-get-script" class="page-content pt-48 px-10 min-h-screen">
             <div class="max-w-4xl mx-auto text-center">
-                <h2 class="text-5xl md:text-7xl font-black text-sky-300 uppercase mb-12 italic tracking-tighter">Copy Script</h2>
-                <div class="flex items-center bg-[#1a2234] rounded-3xl overflow-hidden border border-gray-800 p-2 shadow-2xl">
-                    <div class="flex-1 px-8 py-5 text-left overflow-x-auto">
-                        <code id="script-text" class="text-sky-400 font-mono text-lg italic select-all">loadstring(game:HttpGet("https://foxname.io/script"))()</code>
+                <h2 class="text-6xl md:text-8xl font-black text-sky-400 uppercase mb-16 italic tracking-tighter">
+                    Copy Script
+                </h2>
+                
+                <div class="flex flex-col md:flex-row items-stretch bg-[#1a2234] rounded-[2.5rem] overflow-hidden border border-gray-800 p-4 shadow-3xl">
+                    <div class="flex-1 p-8 text-left overflow-x-auto bg-[#0b1120]/50 rounded-[2rem]">
+                        <code id="script-text" class="text-sky-400 font-mono text-xl italic select-all leading-relaxed">
+                            loadstring(game:HttpGet("https://raw.githubusercontent.com/foxname/main/script.lua"))()
+                        </code>
                     </div>
-                    <button onclick="copyScript()" class="bg-sky-500 hover:bg-sky-400 text-white w-20 h-20 rounded-2xl flex items-center justify-center transition-all active:scale-95 group">
-                        <i id="copy-icon" class="fa-solid fa-copy text-2xl group-hover:rotate-12 transition-transform"></i>
+                    <button onclick="copyScript()" 
+                            class="bg-sky-500 hover:bg-sky-400 text-white px-10 mt-4 md:mt-0 md:ml-4 rounded-[2rem] flex items-center justify-center transition-all active:scale-95 group min-h-[80px]">
+                        <i id="copy-icon" class="fa-solid fa-copy text-3xl group-hover:rotate-12 transition-transform"></i>
                     </button>
                 </div>
-                <p id="copy-status" class="mt-6 text-sky-400 font-bold opacity-0 transition-opacity">✓ Script Copied to Clipboard!</p>
+                
+                <p id="copy-status" class="mt-8 text-sky-400 font-black text-xl opacity-0 transition-opacity duration-300">
+                    <i class="fa-solid fa-circle-check mr-2"></i> Copied successfully!
+                </p>
             </div>
         </div>
+
+        <footer class="py-16 text-center text-gray-700 font-bold uppercase tracking-[0.6em] text-xs">
+            &copy; 2026 Foxname Project - All Rights Reserved
+        </footer>
     </div>
 
     <script>
+        // Initialize GSAP ScrollTrigger
         gsap.registerPlugin(ScrollTrigger);
 
-        // Loading & Reveal Logic
+        // Loading Handler & Initial Reveal
         window.addEventListener('load', () => {
             window.scrollTo(0, 0);
+            
             setTimeout(() => {
                 const loader = document.getElementById('loader');
                 loader.style.opacity = "0";
+                
                 setTimeout(() => {
                     loader.style.display = "none";
                     document.getElementById('main-content').classList.add('loaded');
                     
-                    // GSAP Scroll Animation cho 3 ô tính năng
+                    // Initialize Feature Card GSAP Animation
                     gsap.to(".feature-box", {
                         scrollTrigger: {
                             trigger: "#feature-grid",
@@ -224,48 +356,69 @@
                         },
                         opacity: 1,
                         y: 0,
-                        duration: 1,
-                        stagger: 0.2, // Hiện từng ô một
+                        duration: 1.2,
+                        stagger: 0.3,
                         ease: "power4.out"
                     });
                 }, 600);
             }, 1200);
         });
 
-        // Sidebar & Overlay Controls
+        // Sidebar Controls
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('overlay');
         const sidebarBtn = document.getElementById('sidebar-btn');
         const closeBtn = document.getElementById('close-sidebar');
 
-        sidebarBtn.onclick = () => { sidebar.classList.add('open'); overlay.classList.remove('hidden'); }
-        closeBtn.onclick = () => { sidebar.classList.remove('open'); overlay.classList.add('hidden'); }
-        overlay.onclick = () => { sidebar.classList.remove('open'); overlay.classList.add('hidden'); }
+        function toggleSidebar(state) {
+            if (state) {
+                sidebar.classList.add('open');
+                overlay.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            } else {
+                sidebar.classList.remove('open');
+                overlay.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+        }
 
-        // Page Switching
+        sidebarBtn.onclick = () => toggleSidebar(true);
+        closeBtn.onclick = () => toggleSidebar(false);
+        overlay.onclick = () => toggleSidebar(false);
+
+        // Page Navigation Management
         function showPage(id) {
-            document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
-            document.getElementById('page-' + id).classList.add('active');
-            sidebar.classList.remove('open'); 
-            overlay.classList.add('hidden');
-            window.scrollTo(0,0);
+            document.querySelectorAll('.page-content').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            const targetPage = document.getElementById('page-' + id);
+            targetPage.classList.add('active');
+            
+            toggleSidebar(false);
+            window.scrollTo(0, 0);
+            
+            // Refresh ScrollTrigger to ensure animations work on the new page
             ScrollTrigger.refresh();
         }
 
-        // Copy Function
+        // Script Copy Functionality
         function copyScript() {
-            const text = document.getElementById('script-text').innerText;
-            navigator.clipboard.writeText(text);
+            const scriptContent = document.getElementById('script-text').innerText;
+            navigator.clipboard.writeText(scriptContent);
+            
             const icon = document.getElementById('copy-icon');
             const status = document.getElementById('copy-status');
             
-            icon.className = 'fa-solid fa-check text-2xl';
+            // Change Icon to Checkmark
+            icon.className = 'fa-solid fa-check text-3xl scale-110';
             status.style.opacity = '1';
             
+            // Reset after 2.5 seconds
             setTimeout(() => {
-                icon.className = 'fa-solid fa-copy text-2xl';
+                icon.className = 'fa-solid fa-copy text-3xl';
                 status.style.opacity = '0';
-            }, 2000);
+            }, 2500);
         }
     </script>
 </body>
