@@ -6,167 +6,165 @@
     <title>Foxname - The Best Script</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     
     <script>
-        // Check theme ngay lập tức
         if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
         }
-
         tailwind.config = { 
             darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: { 'mono': ['"JetBrains Mono"', 'monospace'], 'sans': ['Inter', 'sans-serif'] }
-                }
-            }
+            theme: { extend: { fontFamily: { 'sans': ['Inter', 'sans-serif'] } } }
         }
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         /* Loading Screen */
         #loader {
-            position: fixed;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: #0f172a;
-            z-index: 100;
-            transition: opacity 0.8s ease, visibility 0.8s;
+            position: fixed; inset: 0; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; background: #0f172a; z-index: 100;
         }
         .loader-circle {
-            width: 50px;
-            height: 50px;
-            border: 5px solid rgba(56, 189, 248, 0.2);
-            border-top-color: #38bdf8;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+            width: 40px; height: 40px; border: 4px solid rgba(56, 189, 248, 0.2);
+            border-top-color: #38bdf8; border-radius: 50%; animation: spin 1s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* Banner 3D chuẩn 45 độ */
-        .banner-container { perspective: 1500px; }
-        .banner-3d-image {
-            transform: rotateY(-35deg) rotateX(10deg);
-            box-shadow: -30px 30px 60px rgba(0,0,0,0.5);
-            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        /* Banner 3D */
+        .banner-wrap { perspective: 1200px; }
+        .banner-3d {
+            transform: rotateY(-30deg) rotateX(10deg);
+            box-shadow: -25px 25px 50px rgba(0,0,0,0.4);
+            transition: all 0.5s ease;
         }
-        .banner-3d-image:hover {
-            transform: rotateY(-10deg) rotateX(5deg) scale(1.02);
+        .banner-3d:hover { transform: rotateY(-5deg) rotateX(0deg) scale(1.05); }
+
+        /* Hiệu ứng 3 ô tính năng */
+        .feature-box {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid transparent;
+        }
+        .feature-box:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: #3b82f6;
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
         }
 
-        /* Utils */
-        .feature-box { opacity: 0; transform: translateY(30px); }
+        /* Sidebar */
         #sidebar { transition: transform 0.4s ease; transform: translateX(-100%); }
         #sidebar.open { transform: translateX(0); }
         .page-content { display: none; }
         .page-content.active { display: block; }
-        .custom-scroll::-webkit-scrollbar { height: 4px; }
-        .custom-scroll::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 10px; }
     </style>
 </head>
-<body class="font-sans bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-500 min-h-screen">
+<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-500 min-h-screen">
 
     <div id="loader">
         <div class="loader-circle mb-4"></div>
-        <span class="text-sky-400 font-bold tracking-[0.3em] uppercase animate-pulse">Foxname Loading...</span>
+        <p class="text-sky-400 font-bold tracking-widest uppercase text-xs">Loading Foxname...</p>
     </div>
 
-    <aside id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 z-[60] p-6 shadow-2xl flex flex-col">
+    <aside id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 z-[60] p-6 flex flex-col shadow-2xl">
         <div class="flex justify-between items-center mb-10">
-            <span class="text-2xl font-bold text-sky-400">Foxname</span>
-            <button id="close-sidebar" class="text-xl"><i class="fa-solid fa-xmark"></i></button>
+            <span class="text-2xl font-black text-sky-400">FOXNAME</span>
+            <button id="close-sidebar" class="text-xl hover:text-red-500"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <nav class="space-y-4 flex-1">
-            <button onclick="showPage('main')" class="w-full flex items-center gap-4 p-4 rounded-xl hover:bg-blue-500/10 font-bold transition-all"><i class="fa-solid fa-house"></i> Main</button>
-            <button onclick="showPage('get-script')" class="w-full flex items-center gap-4 p-4 rounded-xl hover:bg-blue-500/10 font-bold transition-all"><i class="fa-solid fa-code"></i> Get Script</button>
+            <button onclick="showPage('main')" class="w-full flex items-center gap-4 p-4 rounded-xl hover:bg-sky-500/10 font-bold transition-all text-left">
+                <i class="fa-solid fa-house text-sky-500 w-6"></i> Main
+            </button>
+            <button onclick="showPage('get-script')" class="w-full flex items-center gap-4 p-4 rounded-xl hover:bg-sky-500/10 font-bold transition-all text-left">
+                <i class="fa-solid fa-code text-sky-500 w-6"></i> Get Script
+            </button>
         </nav>
+        <div class="pt-6 border-t border-gray-100 dark:border-gray-700">
+            <a href="https://discord.gg/pSp8ABXNT5" target="_blank" class="flex items-center justify-center gap-3 w-full py-3 rounded-xl bg-[#5865F2] hover:bg-[#4752C4] text-white font-bold transition-all shadow-lg">
+                <i class="fa-brands fa-discord text-xl"></i> Discord
+            </a>
+        </div>
     </aside>
 
     <div id="overlay" class="fixed inset-0 bg-black/50 z-[55] hidden backdrop-blur-sm"></div>
 
-    <nav class="fixed top-0 w-full flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md z-50">
+    <nav class="fixed top-0 w-full flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md z-50">
         <div class="flex items-center gap-4">
-            <button id="sidebar-btn" class="text-2xl"><i class="fa-solid fa-bars"></i></button>
-            <span class="text-2xl font-bold text-sky-400">Foxname</span>
+            <button id="sidebar-btn" class="text-2xl hover:text-sky-500"><i class="fa-solid fa-bars"></i></button>
+            <span class="text-2xl font-black text-sky-400 tracking-tighter">FOXNAME</span>
         </div>
         <div class="flex items-center gap-4">
             <button id="theme-toggle" class="p-2 rounded-full bg-gray-100 dark:bg-gray-800 transition-all">
                 <i id="theme-icon" class="fa-solid fa-sun text-orange-500 text-xl"></i>
             </button>
-            <img src="https://cdn.discordapp.com/attachments/1420233083801571419/1420233084774912040/Frame_14.png" class="w-10 h-10 rounded-full border-2 border-blue-400 object-cover" onerror="this.src='https://ui-avatars.com/api/?name=F&background=0ea5e9&color=fff'">
+            <img src="https://cdn.discordapp.com/attachments/1420233083801571419/1420233084774912040/Frame_14.png" 
+                 referrerpolicy="no-referrer"
+                 class="w-10 h-10 rounded-full border-2 border-sky-400 object-cover" 
+                 onerror="this.src='https://ui-avatars.com/api/?name=F&background=0ea5e9&color=fff'">
         </div>
     </nav>
 
     <div id="page-main" class="page-content active">
-        <main class="min-h-screen flex items-center pt-20 px-10 md:px-20 bg-gray-50 dark:bg-gray-900 transition-colors">
-            <div class="flex flex-col md:flex-row items-center justify-start gap-12 md:gap-20 w-full">
-                <div class="banner-container">
-                    <img id="main-banner" src="https://cdn.discordapp.com/attachments/1418822044019195954/1418827523348762727/TV_-_3.png" class="banner-3d-image rounded-3xl w-full md:w-[500px] object-cover">
+        <main class="min-h-screen flex items-center pt-24 px-10 md:px-20">
+            <div class="flex flex-col md:flex-row items-center gap-16 w-full">
+                <div class="banner-wrap">
+                    <img src="https://cdn.discordapp.com/attachments/1418822044019195954/1418827523348762727/TV_-_3.png" 
+                         referrerpolicy="no-referrer"
+                         class="banner-3d rounded-3xl w-full md:w-[520px] object-cover">
                 </div>
                 <div class="text-left">
-                    <h1 class="text-5xl md:text-7xl font-black text-sky-400 leading-tight uppercase tracking-tighter">THE BEST SCRIPT <br> 99 NIGHT</h1>
-                    <p class="text-base font-semibold text-gray-400 mt-4 mb-10 tracking-[0.4em] uppercase opacity-70">FOXNAME SCRIPT</p>
-                    <button onclick="showPage('get-script')" class="bg-blue-500 hover:bg-blue-600 text-white px-10 py-4 rounded-2xl font-bold transition-all shadow-xl shadow-blue-500/30">GET SCRIPT NOW</button>
+                    <h1 class="text-5xl md:text-7xl font-black text-sky-400 leading-none uppercase tracking-tighter">THE BEST SCRIPT <br> 99 NIGHT</h1>
+                    <p class="text-sm font-bold text-gray-400 mt-6 mb-10 tracking-[0.5em] uppercase opacity-60">FOXNAME ECOSYSTEM</p>
+                    <button onclick="showPage('get-script')" class="bg-sky-500 hover:bg-sky-600 text-white px-12 py-4 rounded-2xl font-black transition-all shadow-xl shadow-sky-500/20 uppercase">GET SCRIPT NOW</button>
                 </div>
             </div>
         </main>
 
         <section class="py-32 px-10 md:px-20 max-w-7xl mx-auto">
-            <div id="feature-grid" class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                <div class="feature-box p-10 rounded-[2.5rem] bg-white dark:bg-gray-800/50 shadow-xl border border-gray-100 dark:border-gray-700/50">
-                    <i class="fa-solid fa-gift text-blue-500 text-3xl mb-6"></i>
-                    <h3 class="text-2xl font-bold mb-4 uppercase text-blue-500 italic">Always Free</h3>
-                    <p class="text-gray-500 dark:text-gray-400 text-sm">Enjoy high-quality gaming scripts at zero cost forever. Our project ensures that every premium feature remains accessible to everyone without hidden fees, subscriptions, or annoying paywalls in your experience.</p>
+            <h2 class="text-4xl font-black text-center text-sky-400 uppercase mb-20 tracking-widest italic">Why Choose Foxname?</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="feature-box p-10 rounded-[2.5rem] bg-gray-50 dark:bg-gray-800 shadow-sm border border-gray-100 dark:border-gray-700 transition-all">
+                    <i class="fa-solid fa-gift text-sky-500 text-3xl mb-6"></i>
+                    <h3 class="text-2xl font-black mb-4 uppercase text-sky-500 italic">Always Free</h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Enjoy high-quality gaming scripts at zero cost forever. Our project ensures that every premium feature remains accessible to everyone without hidden fees, subscriptions, or annoying paywalls in your experience.</p>
                 </div>
-                <div class="feature-box p-10 rounded-[2.5rem] bg-white dark:bg-gray-800/50 shadow-xl border border-gray-100 dark:border-gray-700/50">
+                <div class="feature-box p-10 rounded-[2.5rem] bg-gray-50 dark:bg-gray-800 shadow-sm border border-gray-100 dark:border-gray-700 transition-all">
                     <i class="fa-solid fa-shield text-green-500 text-3xl mb-6"></i>
-                    <h3 class="text-2xl font-bold mb-4 uppercase text-green-500 italic">Undetected</h3>
-                    <p class="text-gray-500 dark:text-gray-400 text-sm">Stay secure with our advanced anti-cheat bypass technology. We provide constant updates to match the latest game versions, ensuring your account remains safe while you dominate the competition with total confidence.</p>
+                    <h3 class="text-2xl font-black mb-4 uppercase text-green-500 italic">Undetected</h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Stay secure with our advanced anti-cheat bypass technology. We provide constant updates to match the latest game versions, ensuring your account remains safe while you dominate the competition with total confidence.</p>
                 </div>
-                <div class="feature-box p-10 rounded-[2.5rem] bg-white dark:bg-gray-800/50 shadow-xl border border-gray-100 dark:border-gray-700/50">
+                <div class="feature-box p-10 rounded-[2.5rem] bg-gray-50 dark:bg-gray-800 shadow-sm border border-gray-100 dark:border-gray-700 transition-all">
                     <i class="fa-solid fa-headset text-purple-500 text-3xl mb-6"></i>
-                    <h3 class="text-2xl font-bold mb-4 uppercase text-purple-500 italic">Support</h3>
-                    <p class="text-gray-500 dark:text-gray-400 text-sm">Get instant help from our professional staff through Discord. We offer 24/7 assistance for setup, troubleshooting, and custom requests to make sure your script runs perfectly on any device without issues.</p>
+                    <h3 class="text-2xl font-black mb-4 uppercase text-purple-500 italic">Support</h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Get instant help from our professional staff through Discord. We offer 24/7 assistance for setup, troubleshooting, and custom requests to make sure your script runs perfectly on any device without issues.</p>
                 </div>
             </div>
         </section>
     </div>
 
-    <div id="page-get-script" class="page-content pt-40 px-6 md:px-20 min-h-screen bg-gray-50 dark:bg-gray-900">
-        <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-4xl md:text-6xl font-black text-sky-400 uppercase mb-12">Copy Script</h2>
-            <div class="relative flex items-stretch bg-white dark:bg-gray-900 shadow-2xl rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700">
-                <div class="flex-1 p-6 text-left overflow-x-auto bg-gray-50 dark:bg-black/20 custom-scroll">
-                    <code id="script-text" class="text-blue-600 dark:text-blue-400 italic">nothing</code>
+    <div id="page-get-script" class="page-content pt-40 px-6 md:px-20 min-h-screen">
+        <div class="max-w-3xl mx-auto text-center">
+            <h2 class="text-4xl font-black text-sky-400 uppercase mb-12 italic">Copy Script</h2>
+            <div class="flex items-stretch bg-gray-100 dark:bg-gray-800 rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 shadow-inner">
+                <div class="flex-1 p-6 text-left overflow-x-auto">
+                    <code id="script-text" class="text-sky-600 dark:text-sky-400 font-mono italic">nothing</code>
                 </div>
-                <button onclick="copyScript()" class="bg-blue-500 px-8 text-white"><i id="copy-icon" class="fa-solid fa-copy"></i></button>
+                <button onclick="copyScript()" class="bg-sky-500 hover:bg-sky-600 text-white px-8 transition-colors">
+                    <i id="copy-icon" class="fa-solid fa-copy"></i>
+                </button>
             </div>
-            <p id="copy-status" class="mt-4 text-blue-500 opacity-0 transition-opacity">✓ Copied!</p>
+            <p id="copy-status" class="mt-4 text-sky-500 font-bold opacity-0 transition-opacity">✓ Copied to clipboard!</p>
         </div>
     </div>
 
     <script>
-        // Fix link Discord triệt để bằng cách thêm tham số tránh cache
         window.addEventListener('load', () => {
-            const banner = document.getElementById('main-banner');
-            banner.src = banner.src + "?v=" + new Date().getTime();
-            
-            // Tắt loader sau khi mọi thứ sẵn sàng
             setTimeout(() => {
-                document.getElementById('loader').style.opacity = '0';
-                setTimeout(() => {
-                    document.getElementById('loader').style.visibility = 'hidden';
-                    gsap.to(".feature-box", { opacity: 1, y: 0, stagger: 0.2, duration: 0.8 });
-                }, 800);
-            }, 1000);
+                const loader = document.getElementById('loader');
+                loader.style.opacity = "0";
+                setTimeout(() => loader.style.display = "none", 500);
+            }, 800);
         });
 
-        // Menu & Theme logic
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('overlay');
         const themeIcon = document.getElementById('theme-icon');
@@ -179,11 +177,12 @@
             document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
             document.getElementById('page-' + id).classList.add('active');
             sidebar.classList.remove('open'); overlay.classList.add('hidden');
+            window.scrollTo(0,0);
         }
 
         function updateIcon() {
             const isDark = document.documentElement.classList.contains('dark');
-            themeIcon.className = isDark ? 'fa-solid fa-moon text-blue-400 text-xl' : 'fa-solid fa-sun text-orange-500 text-xl';
+            themeIcon.className = isDark ? 'fa-solid fa-moon text-sky-400 text-xl' : 'fa-solid fa-sun text-orange-500 text-xl';
         }
         updateIcon();
 
@@ -195,8 +194,13 @@
 
         function copyScript() {
             navigator.clipboard.writeText(document.getElementById('script-text').innerText);
+            const icon = document.getElementById('copy-icon');
+            icon.classList.replace('fa-copy', 'fa-check');
             document.getElementById('copy-status').style.opacity = '1';
-            setTimeout(() => document.getElementById('copy-status').style.opacity = '0', 2000);
+            setTimeout(() => {
+                icon.classList.replace('fa-check', 'fa-copy');
+                document.getElementById('copy-status').style.opacity = '0';
+            }, 2000);
         }
     </script>
 </body>
