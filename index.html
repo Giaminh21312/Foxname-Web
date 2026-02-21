@@ -10,6 +10,10 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     
     <script>
+        // FIX LỖI LỆCH TRANG: Ép cuộn lên đầu ngay lập tức
+        window.onbeforeunload = function () { window.scrollTo(0, 0); };
+        history.scrollRestoration = "manual";
+
         if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
         }
@@ -174,7 +178,9 @@
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
+        // Ép cuộn lên đầu khi trang load xong hoàn toàn
         window.addEventListener('load', () => {
+            window.scrollTo(0, 0);
             setTimeout(() => {
                 const loader = document.getElementById('loader');
                 loader.style.opacity = "0";
